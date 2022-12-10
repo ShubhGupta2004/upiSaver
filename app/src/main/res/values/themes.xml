@@ -21,7 +21,7 @@
     </style>
 
     <style name="Modal" parent="Widget.Design.BottomSheet.Modal">
-        <item name="background">
+        <item name="android:background">
 
         </item>
     </style>
