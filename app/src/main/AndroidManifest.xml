@@ -3,16 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.upisaver">
 
+    <uses-permission android:name="android.permission.READ_SMS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/img_2"
+        android:icon="@drawable/img_8"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/img_2"
+        android:roundIcon="@drawable/img_8"
         android:supportsRtl="true"
         android:theme="@style/Theme.UpiSaver"
         tools:targetApi="31">
+        <activity
+            android:name=".msgView"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

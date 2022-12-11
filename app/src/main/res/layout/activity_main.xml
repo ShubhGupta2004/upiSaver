@@ -75,14 +75,30 @@
                 android:layout_weight="1">
             </LinearLayout>
         </LinearLayout>
-
-        <TextView
+        <ScrollView
+            android:id="@+id/transanctionHScroll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/leftRightComb"
-            android:text="Transaction History"
             android:layout_marginStart="11dp"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="30dp">
+            <TextView
+                android:id="@+id/transanctionH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transaction History" />
+        </ScrollView>
+
+        <ImageButton
+            android:id="@+id/showSMS"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/img_8"
+            android:layout_below="@+id/transanctionHScroll"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="16dp"/>
+
 
         <ImageButton
             android:id="@+id/addTrans"
