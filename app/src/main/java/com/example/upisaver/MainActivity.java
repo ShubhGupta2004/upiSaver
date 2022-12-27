@@ -1,21 +1,16 @@
 package com.example.upisaver;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -25,10 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton add;
@@ -160,11 +152,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    //    public void saveIt(View c){
-//        String str = changeEdit.getText().toString();
-//        int num = Integer.parseInt(str);
-//        Toast.makeText(MainActivity.this,"Saved: "+num,Toast.LENGTH_SHORT).show();
-//    }
 
 }
