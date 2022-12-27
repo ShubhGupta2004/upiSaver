@@ -21,13 +21,18 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton add;
     boolean b = true;
     BottomSheetDialog bottomSheetDialog;
     LinearLayout ll;
-    Switch inExp;
+    SwitchMaterial inExp;
     boolean saveOption = false;
     private final int SMS_Code = 1;
     ImageView imgIcon;
@@ -35,10 +40,14 @@ public class MainActivity extends AppCompatActivity {
     EditText changeEdit;
     TextView transHeading;
     ImageButton img1;
+    Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Realm.init(getApplicationContext());
+
+        realm=Realm.getDefaultInstance();
         bottomSheetDialog= new BottomSheetDialog(MainActivity.this,R.style.BottomSheet);
         View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.bottom_sheet_dialog,(LinearLayout)findViewById(R.id.bottomSheet));
         bottomSheetDialog.setContentView(v);
@@ -67,12 +76,61 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetDialog.show();
             }
         });
+
+
         ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String str = changeEdit.getText().toString();
-                int num = Integer.parseInt(str);
+                final int num = Integer.parseInt(str);
+                final String date1 = "";
+                final String usage = " ";
+                final boolean Switch1=inExp.isChecked();
+                Number id = realm.where(transaction.class).max("id");
+
+                // on below line we are
+                // creating a variable for our id.
+                int nextId;
+
+                // validating if id is null or not.
+                if (id == null) {
+                    // if id is null
+                    // we are passing it as 1.
+                    nextId = 1;
+                } else {
+                    // if id is not null then
+                    // we are incrementing it by 1
+                    nextId = id.intValue() + 1;
+                }
+
+                try{
+                    realm.beginTransaction();
+                    transaction trans = realm.createObject(transaction.class,nextId);
+                    trans.setAmount(num);
+                    trans.setDate(date1);
+                    trans.setType(Switch1);
+                    trans.setUsage(usage);
+                    realm.commitTransaction();
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                    realm.cancelTransaction();
+                }
+
                 Toast.makeText(MainActivity.this,"Saved: "+num,Toast.LENGTH_SHORT).show();
+
+                realm.executeTransactionAsync(new Realm.Transaction(){
+
+                    @Override
+                    public void execute(@NonNull Realm realm) {
+                        RealmQuery<transaction> std = realm.where(transaction.class);
+                        RealmResults<transaction> rst = std.findAll();
+                        for (int i = 0; i < rst.size(); i++) {
+                            transaction tr = rst.get(i);
+                            assert tr != null;
+                            System.out.println(tr.getId()+" "+tr.getAmount()+" "+tr.getDate()+".");
+                        }
+                    }
+                });
             }
         });
 
@@ -90,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,6 +182,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    //permission for the message
     private void requestSmsPermission(){
         if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_SMS)){
             new AlertDialog.Builder(this).setTitle("Permission Needed").setMessage("Required for the app to work properly").setPositiveButton("OK", new DialogInterface.OnClickListener() {
