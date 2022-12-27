@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,8 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     if (cursor.moveToFirst()) { // must check the result to prevent exception
                         do {
                             String msgData = "";
-                            for(int idx=0;idx<cursor.getColumnCount();idx++)
-                            {
+                            for(int idx=0;idx<cursor.getColumnCount();idx++){
                                 msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
                             }
                             // use msgData

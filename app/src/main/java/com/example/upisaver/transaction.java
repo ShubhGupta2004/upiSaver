@@ -11,17 +11,27 @@ public class transaction extends RealmObject {
     private String date;
     private boolean type;
     private String usage;
+    private int msgId;
 
     public transaction() {
 
     }
 
-    public transaction(int id, int amount, String date, boolean type, String usage) {
+    public int getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(int msgId) {
+        this.msgId = msgId;
+    }
+
+    public transaction(int id, int amount, String date, boolean type, String usage, int msgId) {
         this.id = id;
         this.amount = amount;
         this.date = date;
         this.type = type;
         this.usage = usage;
+        this.msgId=msgId;
     }
 
     public int getId() {
