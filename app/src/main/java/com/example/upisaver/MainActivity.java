@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import java.util.HashMap;
+
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -154,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 StringBuilder msg = new StringBuilder();
+                HashMap<Integer,String> msgDataTemp = new HashMap<>();
+
                 if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.READ_SMS)==PackageManager.PERMISSION_GRANTED){
                     Cursor cursor = getContentResolver().query(Uri.parse("content://sms/inbox"), null, null, null, null);
 
@@ -162,6 +166,11 @@ public class MainActivity extends AppCompatActivity {
                             String msgData = "";
                             for(int idx=0;idx<cursor.getColumnCount();idx++){
                                 msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
+                                String s = cursor.getString(idx);
+                                if(s.contains("UPI")){
+                                    msgDataTemp.put(idx,s);
+                                }
+                                msgData+="\n\n\n";
                             }
                             // use msgData
                             msg.append(msgData).append("\n\n\n");
@@ -175,8 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     requestSmsPermission();
                 }
 
-
-                transHeading.setText(msg.toString());
+                transHeading.setText(msgDataTemp+" "+msg);
                 //startActivity(new Intent(MainActivity.this,msgView.class));
             }
         });
