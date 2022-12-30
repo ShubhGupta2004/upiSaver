@@ -13,6 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/heading"
             android:layout_width="wrap_content"
@@ -22,15 +23,24 @@
             android:textSize="30dp"
             android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true"/>
+        <Button
+            android:id="@+id/viewTransactionButton"
+            android:layout_width="60dp"
+            android:layout_alignParentEnd="true"
+            android:textSize="10sp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="60dp"
+            android:text="view Trans"
+            />
         <LinearLayout
             android:id="@+id/header_amou"
             android:layout_width="0dp"
             android:layout_height="110dp"
-            android:layout_below="@+id/heading"
+            android:layout_below="@+id/viewTransactionButton"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="11dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="19dp"
             android:background="@drawable/header_amou"
             android:elevation="4dp"

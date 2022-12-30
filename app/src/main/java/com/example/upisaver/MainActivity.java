@@ -7,12 +7,14 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     EditText changeEdit;
     TextView transHeading;
     ImageButton img1;
+    Button viewTransaction;
     Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         textIt=bottomSheetDialog.findViewById(R.id.IncomeExpense);
         img1= findViewById(R.id.showSMS);
         transHeading=findViewById(R.id.transanctionH);
+        viewTransaction=findViewById(R.id.viewTransactionButton);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +83,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        viewTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,msgView.class));
+            }
+        });
 
         ll.setOnClickListener(new View.OnClickListener() {
             @Override

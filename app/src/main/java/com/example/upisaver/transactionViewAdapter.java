@@ -1,6 +1,7 @@
 package com.example.upisaver;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,12 +54,23 @@ public class transactionViewAdapter extends RecyclerView.Adapter<transactionView
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        transactionViewData transactionViewData = transList.get(position);
+        TextView amount1 = holder.viewAmount;
+        TextView date1 = holder.viewDate;
+        TextView type1 = holder.viewType;
+        TextView usage1 = holder.viewUsage;
+        int amt = transactionViewData.getAmount();
+        String amtS=String.valueOf(amt);
+        amount1.setText(amtS);
+        date1.setText(transactionViewData.getData());
+        type1.setText(transactionViewData.isType() ? "Income":"Expense");
+        usage1.setText(transactionViewData.getUsage());
+        Log.d("Viewer","trans id: " +transactionViewData.getId());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return transList.size();
     }
 
 }
