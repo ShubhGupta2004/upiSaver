@@ -191,12 +191,14 @@ public class MainActivity extends AppCompatActivity {
 
                                     if (Objects.equals(cursor.getColumnName(idx), "body")) {
                                         String s = cursor.getString(idx);
-                                        if (s.contains("UPI") && s.contains("is debited for Rs.")) {
+                                        if (s.contains("UPI")) {
                                             sTemp = s;
-                                            int idx1 = s.indexOf("is debited for Rs.") + 18;
-                                            while (s.charAt(idx1) != ' ') {
-                                                amountTemp += s.charAt(idx1);
-                                                idx1++;
+                                            if(s.contains("is debited for Rs.")){
+                                                int idx1 = s.indexOf("is debited for Rs.") + 18;
+                                                while (s.charAt(idx1) != ' ') {
+                                                    amountTemp += s.charAt(idx1);
+                                                    idx1++;
+                                                }
                                             }
                                         }
                                     }
@@ -211,12 +213,14 @@ public class MainActivity extends AppCompatActivity {
                                 }
 
                                 if (!amountTemp.equals("")) {
-                                    int num = Integer.parseInt(amountTemp);
+                                    System.out.println(amountTemp);
+                                    float num = Float.parseFloat(amountTemp);
+                                    System.out.println(num);
                                     long unix_seconds = Long.parseLong(dateTemp);
 
                                     //convert seconds to milliseconds
 
-                                    Date date = new Date(unix_seconds * 1000L);
+                                    Date date = new Date(unix_seconds);
                                     // format of the date
 
                                     SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -240,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                                     try {
                                         realm.beginTransaction();
                                         transaction trans = realm.createObject(transaction.class, nextId);
-                                        trans.setAmount(num);
+                                        trans.setAmount((int)num);
                                         trans.setDate(date1);
                                         trans.setType(false);
                                         trans.setUsage(usage);
