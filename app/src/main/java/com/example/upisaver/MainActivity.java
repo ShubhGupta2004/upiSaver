@@ -25,8 +25,11 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -173,32 +176,87 @@ public class MainActivity extends AppCompatActivity {
                     Cursor cursor = getContentResolver().query(Uri.parse("content://sms/inbox"), null, null, null, null);
 
                     if (cursor.moveToFirst()) { // must check the result to prevent exception
-                        do {
-                            String msgData = "";
-                            int idTemp=0;
-                            String sTemp="";
-                            for(int idx=0;idx<cursor.getColumnCount();idx++){
-                                msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
-                                if(Objects.equals(cursor.getColumnName(idx), "_id")){
-                                    idTemp=Integer.parseInt(cursor.getString(idx));
-                                }
+                        try {
+                            do {
+                                String msgData = "";
+                                int idTemp = 0;
+                                String sTemp = "";
+                                String dateTemp = "";
+                                String amountTemp = "";
+                                for (int idx = 0; idx < cursor.getColumnCount(); idx++) {
+                                    msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
+                                    if (Objects.equals(cursor.getColumnName(idx), "_id")) {
+                                        idTemp = Integer.parseInt(cursor.getString(idx));
+                                    }
 
-                                if(Objects.equals(cursor.getColumnName(idx), "body")){
-                                    String s = cursor.getString(idx);
-                                    if(s.contains("UPI")){
-                                        sTemp=s;
+                                    if (Objects.equals(cursor.getColumnName(idx), "body")) {
+                                        String s = cursor.getString(idx);
+                                        if (s.contains("UPI") && s.contains("is debited for Rs.")) {
+                                            sTemp = s;
+                                            int idx1 = s.indexOf("is debited for Rs.") + 18;
+                                            while (s.charAt(idx1) != ' ') {
+                                                amountTemp += s.charAt(idx1);
+                                                idx1++;
+                                            }
+                                        }
+                                    }
+
+                                    if (Objects.equals(cursor.getColumnName(idx), "date")) {
+                                        dateTemp = cursor.getString(idx);
                                     }
                                 }
-                                msgData+="\n.\n.\n";
-                            }
 
-                            if(!sTemp.equals("")){
-                                msgDataTemp.put(idTemp,sTemp);
-                            }
-                            // use msgData
-                            msg.append(msgData).append("\n\n\n");
-                        } while (cursor.moveToNext());
-                        cursor.close();
+                                if (!sTemp.equals("")) {
+                                    msgDataTemp.put(idTemp, sTemp);
+                                }
+
+                                if (!amountTemp.equals("")) {
+                                    int num = Integer.parseInt(amountTemp);
+                                    long unix_seconds = Long.parseLong(dateTemp);
+
+                                    //convert seconds to milliseconds
+
+                                    Date date = new Date(unix_seconds * 1000L);
+                                    // format of the date
+
+                                    SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    TimeZone istTimeZone = TimeZone.getTimeZone("Asia/Kolkata");
+                                    jdf.setTimeZone(istTimeZone);
+                                    String date1 = jdf.format(date);
+                                    String usage = "Not defined";
+                                    Number id = realm.where(transaction.class).max("id");
+                                    int nextId;
+                                    // validating if id is null or not.
+                                    if (id == null) {
+                                        // if id is null
+                                        // we are passing it as 1.
+                                        nextId = 1;
+                                    } else {
+                                        // if id is not null then
+                                        // we are incrementing it by 1
+                                        nextId = id.intValue() + 1;
+                                    }
+
+                                    try {
+                                        realm.beginTransaction();
+                                        transaction trans = realm.createObject(transaction.class, nextId);
+                                        trans.setAmount(num);
+                                        trans.setDate(date1);
+                                        trans.setType(false);
+                                        trans.setUsage(usage);
+                                        realm.commitTransaction();
+                                    } catch (Exception e) {
+                                        System.out.println(e.getMessage());
+                                        realm.cancelTransaction();
+                                    }
+                                }
+                                // use msgData
+                                msg.append(msgData).append("\n\n\n");
+                            } while (cursor.moveToNext());
+                            cursor.close();
+                        }catch (Exception e){
+                            Toast.makeText(MainActivity.this,"k"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(MainActivity.this,"No msg",Toast.LENGTH_SHORT).show();
                         // empty box, no SMS
