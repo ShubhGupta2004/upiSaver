@@ -26,6 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -174,13 +175,25 @@ public class MainActivity extends AppCompatActivity {
                     if (cursor.moveToFirst()) { // must check the result to prevent exception
                         do {
                             String msgData = "";
+                            int idTemp=0;
+                            String sTemp="";
                             for(int idx=0;idx<cursor.getColumnCount();idx++){
                                 msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
-                                String s = cursor.getString(idx);
-                                if(s.contains("UPI")){
-                                    msgDataTemp.put(idx,s);
+                                if(Objects.equals(cursor.getColumnName(idx), "_id")){
+                                    idTemp=Integer.parseInt(cursor.getString(idx));
                                 }
-                                msgData+="\n\n\n";
+
+                                if(Objects.equals(cursor.getColumnName(idx), "body")){
+                                    String s = cursor.getString(idx);
+                                    if(s.contains("UPI")){
+                                        sTemp=s;
+                                    }
+                                }
+                                msgData+="\n.\n.\n";
+                            }
+
+                            if(!sTemp.equals("")){
+                                msgDataTemp.put(idTemp,sTemp);
                             }
                             // use msgData
                             msg.append(msgData).append("\n\n\n");
