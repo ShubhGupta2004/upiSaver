@@ -174,7 +174,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.READ_SMS)==PackageManager.PERMISSION_GRANTED){
                     Cursor cursor = getContentResolver().query(Uri.parse("content://sms/inbox"), null, null, null, null);
-
+                    Number id2 = realm.where(transaction.class).max("msgId");
+                    if(id2==null){
+                        id2=0;
+                    }
+                    System.out.println("h"+id2);
+                    int id1 = Integer.parseInt(String.valueOf(id2));
+                    System.out.println(id1);
+                    boolean boom = true;
                     if (cursor.moveToFirst()) { // must check the result to prevent exception
                         try {
                             do {
@@ -187,6 +194,11 @@ public class MainActivity extends AppCompatActivity {
                                     msgData += " " + cursor.getColumnName(idx) + ":" + cursor.getString(idx);
                                     if (Objects.equals(cursor.getColumnName(idx), "_id")) {
                                         idTemp = Integer.parseInt(cursor.getString(idx));
+
+                                        if(idTemp<=(int)id1){
+                                            boom=false;
+                                            break;
+                                        }
                                     }
 
                                     if (Objects.equals(cursor.getColumnName(idx), "body")) {
@@ -248,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
                                         trans.setDate(date1);
                                         trans.setType(false);
                                         trans.setUsage(usage);
+                                        trans.setMsgId(idTemp);
                                         realm.commitTransaction();
                                     } catch (Exception e) {
                                         System.out.println(e.getMessage());
@@ -255,11 +268,16 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                                 // use msgData
+                                if(!boom){
+                                    break;
+                                }
                                 msg.append(msgData).append("\n\n\n");
+
                             } while (cursor.moveToNext());
                             cursor.close();
                         }catch (Exception e){
                             Toast.makeText(MainActivity.this,"k"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
                         }
                     } else {
                         Toast.makeText(MainActivity.this,"No msg",Toast.LENGTH_SHORT).show();
