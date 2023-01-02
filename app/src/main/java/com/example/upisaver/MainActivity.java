@@ -36,6 +36,8 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
+
+    //global declaration
     ImageButton add;
     boolean b = true;
     BottomSheetDialog bottomSheetDialog;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Realm.init(getApplicationContext());
 
+        //getting the view from layout
         realm=Realm.getDefaultInstance();
         bottomSheetDialog= new BottomSheetDialog(MainActivity.this,R.style.BottomSheet);
         View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.bottom_sheet_dialog,(LinearLayout)findViewById(R.id.bottomSheet));
@@ -119,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                     nextId = id.intValue() + 1;
                 }
 
+                //adding to database
                 try{
                     realm.beginTransaction();
                     transaction trans = realm.createObject(transaction.class,nextId);
@@ -132,8 +136,9 @@ public class MainActivity extends AppCompatActivity {
                     realm.cancelTransaction();
                 }
 
-                Toast.makeText(MainActivity.this,"Saved: "+num,Toast.LENGTH_SHORT).show();
 
+
+                Toast.makeText(MainActivity.this,"Saved: "+num,Toast.LENGTH_SHORT).show();
                 realm.executeTransactionAsync(new Realm.Transaction(){
 
                     @Override
@@ -288,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 transHeading.setText(msgDataTemp+" "+msg);
-                //startActivity(new Intent(MainActivity.this,msgView.class));
+
             }
         });
     }
