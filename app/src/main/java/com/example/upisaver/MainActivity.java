@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                                     Date date = new Date(unix_seconds);
                                     // format of the date
 
-                                    SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                                     TimeZone istTimeZone = TimeZone.getTimeZone("Asia/Kolkata");
                                     jdf.setTimeZone(istTimeZone);
                                     String date1 = jdf.format(date);
