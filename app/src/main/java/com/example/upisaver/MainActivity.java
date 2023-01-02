@@ -255,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
                                     Number id = realm.where(transaction.class).max("id");
                                     int nextId;
                                     // validating if id is null or not.
+
                                     if (id == null) {
                                         // if id is null
                                         // we are passing it as 1.
