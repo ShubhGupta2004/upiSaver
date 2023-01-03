@@ -216,8 +216,8 @@ public class MainActivity extends AppCompatActivity {
                                                     amountTemp += s.charAt(idx1);
                                                     idx1++;
                                                 }
-                                            }else if(s.contains("debited by Rs.")){
-                                                int idx1 = s.indexOf("debited by Rs.") + 14;
+                                            }else if(s.contains("debited by Rs")){
+                                                int idx1 = s.indexOf("debited by Rs") + 13;
                                                 while (s.charAt(idx1) != ' ') {
                                                     amountTemp += s.charAt(idx1);
                                                     idx1++;
