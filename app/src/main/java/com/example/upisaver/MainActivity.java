@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     boolean saveOption = false;
     private final int SMS_Code = 1;
     ImageView imgIcon;
+
     TextView textIt;
     TextView expenseTotal;
     EditText changeEdit;
