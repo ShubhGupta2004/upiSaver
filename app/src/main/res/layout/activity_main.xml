@@ -12,38 +12,70 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="#AE8B65"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#AE8B65"
+            android:scaleType="fitXY"
+            android:src="@drawable/img"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#AE8B65"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_1"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#FFFFFF"
+            android:layout_alignParentBottom="true">
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UPI Saver"
-            android:textStyle="bold"
-            android:textSize="30dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"/>
-        <Button
-            android:id="@+id/viewTransactionButton"
-            android:layout_width="60dp"
-            android:layout_alignParentEnd="true"
-            android:textSize="10sp"
-            android:layout_marginEnd="20dp"
-            android:layout_height="60dp"
-            android:text="view Trans"
-            />
+            android:text="UPI Saver"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/rectangle_1"
+            android:layout_width="wrap_content"
+            android:layout_height="850dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="153dp"
+            android:background="@drawable/rectangle_1" />
 
         <LinearLayout
             android:id="@+id/header_amou"
             android:layout_width="0dp"
-            android:layout_height="110dp"
-            android:layout_below="@+id/viewTransactionButton"
+            android:layout_height="70dp"
+            android:layout_below="@+id/heading"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="11dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="19dp"
-            android:background="@drawable/header_amou"
             android:elevation="4dp"
             android:orientation="horizontal">
 
@@ -51,22 +83,29 @@
                 android:id="@+id/expenseTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:textSize="40sp"
+                android:layout_gravity="center"
+                android:layout_marginStart="110dp"
                 android:padding="12dp"
-                android:text="Some" />
+                android:text="Some"
+                android:textColor="#FBF1D8"
+                android:textStyle="bold"
+                android:textSize="40sp" />
+
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/leftRightComb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_alignTop="@id/rectangle_1"
             android:layout_below="@+id/header_amou"
-            android:layout_marginTop="30dp"
             android:layout_marginEnd="19dp"
+            android:layout_marginTop="30dp"
             android:layout_marginStart="11dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true">
+
             <LinearLayout
                 android:id="@+id/transLeft"
                 android:layout_width="match_parent"
@@ -88,40 +127,110 @@
                 android:orientation="vertical"
                 android:layout_weight="1">
             </LinearLayout>
+
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/extraTrans"
+            android:layout_width="match_parent"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/leftRightComb"
+            android:background="@drawable/header_a_a"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/transHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_below="@+id/extraTrans">
+
+            <TextView
+                android:id="@+id/transactionH1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transaction History"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="19sp" />
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:layout_alignParentTop="true"
+                app:cardCornerRadius="9dp"
+                android:background="#F0D7A8">
+
+                <TextView
+                    android:id="@+id/transactionHScrollView"
+                    android:padding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="More"
+                    android:textSize="19sp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+        </RelativeLayout>
+
         <ScrollView
             android:id="@+id/transanctionHScroll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/leftRightComb"
+            android:layout_below="@+id/transHeading"
             android:layout_marginStart="11dp"
             android:layout_marginTop="30dp">
+
             <TextView
                 android:id="@+id/transanctionH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Transaction History" />
+                android:text="Transaction History"
+                />
+
         </ScrollView>
 
         <ImageButton
             android:id="@+id/showSMS"
             android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/img_8"
+            android:layout_height="48dp"
             android:layout_below="@+id/transanctionHScroll"
-            android:scaleType="fitXY"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="16dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_8"
+            tools:ignore="SpeakableTextPresentCheck" />
 
 
         <ImageButton
             android:id="@+id/addTrans"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/img"
-            android:layout_margin="16dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/img_9"
+            tools:ignore="SpeakableTextPresentCheck" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

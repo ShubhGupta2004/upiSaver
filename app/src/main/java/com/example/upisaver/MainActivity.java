@@ -14,12 +14,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -48,13 +46,12 @@ public class MainActivity extends AppCompatActivity {
     boolean saveOption = false;
     private final int SMS_Code = 1;
     ImageView imgIcon;
-
     TextView textIt;
     TextView expenseTotal;
     EditText changeEdit;
     TextView transHeading;
     ImageButton img1;
-    Button viewTransaction;
+    TextView viewTransaction;
     Realm realm;
 
 
@@ -76,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
                 //startActivity();
                 if(b) {
                    // add.setImageResource(R.drawable.img_1);
-                    add.setBackgroundResource(R.drawable.img_1);
+                    add.setBackgroundResource(R.drawable.img_9);
                     b=false;
                 }else{
-                    add.setBackgroundResource(R.drawable.img);
+                    add.setBackgroundResource(R.drawable.img_2);
                     b=true;
                 }
 
@@ -187,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         textIt=bottomSheetDialog.findViewById(R.id.IncomeExpense);
         img1= findViewById(R.id.showSMS);
         transHeading=findViewById(R.id.transanctionH);
-        viewTransaction=findViewById(R.id.viewTransactionButton);
+        viewTransaction=findViewById(R.id.transactionHScrollView);
         expenseTotal=findViewById(R.id.expenseTotal);
     }
 

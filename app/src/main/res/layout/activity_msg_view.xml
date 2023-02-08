@@ -12,12 +12,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="#AE8B65"
         app:layout_constraintTop_toTopOf="parent">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sms details"
-            android:textSize="20dp"
+            android:text="Transactions"
+            android:textColor="@color/white"
+            android:textSize="40dp"
             android:layout_margin="16dp"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
