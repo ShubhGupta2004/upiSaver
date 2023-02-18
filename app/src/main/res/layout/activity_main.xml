@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
+            android:id="@+id/settings"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="20dp"
@@ -106,7 +107,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/transLeft"
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
@@ -116,7 +117,17 @@
                 android:orientation="vertical"
                 android:layout_weight="1">
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/displayMonthlyLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Some"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"/>
+
+            </RelativeLayout>
             <LinearLayout
                 android:id="@+id/transRight"
                 android:layout_width="match_parent"
@@ -184,10 +195,6 @@
 
             </androidx.cardview.widget.CardView>
 
-
-
-
-
         </RelativeLayout>
 
         <ScrollView
@@ -228,8 +235,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/img_9"
+            android:src="@drawable/img_9"
             tools:ignore="SpeakableTextPresentCheck" />
     </RelativeLayout>
 

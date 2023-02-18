@@ -1,10 +1,13 @@
 package com.example.upisaver;
 
+import io.realm.annotations.PrimaryKey;
+
 public class transactionViewData{
     private int amount;
     private String data;
     private String usage;
     private boolean type;
+    @PrimaryKey
     private int id;
 
     public transactionViewData() {

@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -67,6 +69,7 @@ class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
 public class msgView extends AppCompatActivity {
     ArrayList<transactionViewData> transactionViewData;
     Realm realm;
+    public int num =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,7 @@ public class msgView extends AppCompatActivity {
             public void execute(Realm realm) {
                 RealmQuery<transaction> std = realm.where(transaction.class);
                 RealmResults<transaction> rst = std.findAll();
-                for (int i = 0; i < rst.size(); i++) {
+                for (int i = rst.size()-2; i >=0; i--) {
                     transaction tr = rst.get(i);
                     assert tr != null;
                     transactionViewData.add(new transactionViewData(tr.getAmount(),tr.getDate(),tr.getUsage(),tr.isType(),tr.getId()));
@@ -94,13 +97,17 @@ public class msgView extends AppCompatActivity {
         recyclerView.setAdapter(transactionViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView
+                        ,new RecyclerItemClickListener.OnItemClickListener(){
             @Override public void onItemClick(View view, int position) {
                 // do whatever
                 //view.findViewById(R.id.);
                 transactionViewData transactionViewData1 = transactionViewData.get(position);
-
-
+                num=transactionViewData1.getAmount();
+                toast(position);
+                Intent it = new Intent(msgView.this,EditTransanctionAcitvity.class);
+                it.putExtra("id",position);
+                startActivity(it);
             }
 
             @Override public void onLongItemClick(View view, int position) {
@@ -108,5 +115,8 @@ public class msgView extends AppCompatActivity {
             }
         })
         );
+    }
+    private void toast(int num){
+        Toast.makeText(msgView.this,num+" ",Toast.LENGTH_SHORT).show();
     }
 }

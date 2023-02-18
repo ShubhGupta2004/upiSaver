@@ -39,9 +39,11 @@ public class MainActivity extends AppCompatActivity {
 
     //global declaration
     ImageButton add;
+    ImageButton settings;
     boolean b = true;
     BottomSheetDialog bottomSheetDialog;
     LinearLayout ll;
+    TextView monthLimit;
     SwitchMaterial inExp;
     boolean saveOption = false;
     private final int SMS_Code = 1;
@@ -169,9 +171,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,setLimitForMonths.class));
+            }
+        });
+
     }
 
     private void initialization() {
+
         realm=Realm.getDefaultInstance();
         bottomSheetDialog= new BottomSheetDialog(MainActivity.this,R.style.BottomSheet);
         View v = LayoutInflater.from(MainActivity.this).inflate(R.layout.bottom_sheet_dialog,(LinearLayout)findViewById(R.id.bottomSheet));
@@ -186,6 +196,8 @@ public class MainActivity extends AppCompatActivity {
         transHeading=findViewById(R.id.transanctionH);
         viewTransaction=findViewById(R.id.transactionHScrollView);
         expenseTotal=findViewById(R.id.expenseTotal);
+        settings=findViewById(R.id.settings);
+        monthLimit=findViewById(R.id.displayMonthlyLimit);
     }
 
 
@@ -229,7 +241,13 @@ public class MainActivity extends AppCompatActivity {
             public void execute(@NonNull Realm realm) {
                 RealmQuery<transaction> std = realm.where(transaction.class);
                 RealmResults<transaction> rst = std.findAll();
-                for (int i = 0; i < rst.size(); i++) {
+                transaction limit = rst.get(rst.size()-1);
+                try {
+                    monthLimit.setText(String.valueOf(limit.getAmount()));
+                }catch (NullPointerException e){
+                    Toast.makeText(MainActivity.this,"Limit not fetched",Toast.LENGTH_SHORT).show();
+                }
+                for (int i = rst.size()-2; i >=0; i--) {
                     transaction tr = rst.get(i);
                     assert tr != null;
                     arr.add(tr.getAmount());

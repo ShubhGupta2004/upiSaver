@@ -17,13 +17,16 @@
         tools:targetApi="31">
         <activity
             android:name=".setLimitForMonths"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".EditTransanctionAcitvity"
+            android:parentActivityName=".msgView"
             android:exported="false" />
         <activity
             android:name=".msgView"
             android:exported="false"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
