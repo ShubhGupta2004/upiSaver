@@ -20,6 +20,7 @@ public class setLimitForMonths extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_set_limit_for_months);
         Realm.init(getApplicationContext());
         saveLimit = findViewById(R.id.saveLimit);
